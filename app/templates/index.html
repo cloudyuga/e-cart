@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>INDEX</h1>
+  <div class="jumbotron">
+    {% for product in products %}
+      <img src="{{ product.location }}" width="200" height="137" hspace="5" vspace="5"/>
+      <br>
+      <a class="btn btn-success" href="addToCart/{{ product.product_id }}" align="centre"> Add To Cart</a>
+      <br>
+    {% endfor %}
+  </div>
+{% endblock %}
