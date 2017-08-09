@@ -4,6 +4,7 @@ from flask import request, render_template, flash, redirect, url_for, session
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from passlib.hash import sha256_crypt
 from app.config import mysql
+from functools import wraps
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -27,7 +28,7 @@ def login():
             if sha256_crypt.verify(password_candidate, password):
                 # Passed
                 session['logged_in'] = True
-                session['username'] = username
+                #session['username'] = username
                 session['userId'] = data['user_id']
                 flash('You are now logged in', 'success')
                 return redirect(url_for('index'))
@@ -36,7 +37,6 @@ def login():
                 return render_template('login.html', error=error)
             cur.close()
         else:
-            print("HERE")
             error = 'Username not found'
             return render_template('login.html', error=error)
 
@@ -47,3 +47,13 @@ def logout():
     session.clear()
     flash("You have been logged out", 'success')
     return redirect(url_for('login'))
+
+def is_logged_in(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('Unauthorized, Please login!', 'danger')
+            return redirect(url_for('login'))
+    return wrap

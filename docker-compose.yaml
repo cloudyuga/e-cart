@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+ db:
+  image: mariadb
+  environment:
+   MYSQL_ROOT_PASSWORD: test
+  volumes:
+   - db_data:/var/lib/mysql
+   - ./sqldump/data:/docker-entrypoint-initdb.d
+  ports:
+   - "3306:3306"
+
+ app:
+  build: .
+  ports: 
+   - "5000:5000"
+  environment: 
+   MYSQL_DB_HOST: db
+   MYSQL_DB_PASSWORD: test
+
+volumes:
+ db_data:
