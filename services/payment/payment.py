@@ -36,7 +36,7 @@ def payment():
             break
         
        headers = {'content-type': 'application/json'}
-       url = 'http://app:5000/update-order-status'
+       url = 'http://orders:5004/update-order-status'
        data = {"orderId": data['orderId']}
        data = json.dumps(data) 
        logger.info("Making a request to Orders to update order status")

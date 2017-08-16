@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block body %}
   {% for order in orders %}
-  <small>Order ID: {{order.order_id}}</small>
+  <small>Order ID: {{order._id}}</small>
   <br>
   <small>Order Status: {{order.order_status}}</small>
   <hr>

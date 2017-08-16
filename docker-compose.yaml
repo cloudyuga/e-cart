@@ -19,6 +19,16 @@ services:
    MYSQL_DB_HOST: db
    MYSQL_DB_PASSWORD: test
 
+ ordersdb:
+  image: mongo
+  volumes:
+   - ordersdb_data:/data/db
+
+ orders:
+  build: ./services/orders
+  ports:
+   - "5004:5004"
+
  paymentdb:
   image: mongo
   volumes:
@@ -32,3 +42,4 @@ services:
 volumes:
  db_data:
  paymentdb_data:
+ ordersdb_data:
