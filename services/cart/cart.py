@@ -57,6 +57,7 @@ def addToCart():
       response = requests.post(url, data=data, headers=headers)        
       logger.info("Response from Catalogue: {}".format(response.status_code))
       if response.status_code is 200:
+         logger.info("Loading response data")
          data = json.loads(response.content)
          logger.info("Updating total price of cart")
          db.cart.update({'_id': cartId}, {'$inc': {'total_price': data['price']}})

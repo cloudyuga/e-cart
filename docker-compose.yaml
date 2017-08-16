@@ -19,6 +19,16 @@ services:
    MYSQL_DB_HOST: db
    MYSQL_DB_PASSWORD: test
 
+ userdb:
+  image: mongo
+  volumes:
+   - userdb_data:/data/db
+
+ user:
+  build: ./services/user
+  ports:
+   - "5002:5002"
+
  cartdb:
   image: mongo
   volumes:
@@ -54,3 +64,4 @@ volumes:
  paymentdb_data:
  ordersdb_data:
  cartdb_data:
+ userdb_data:
