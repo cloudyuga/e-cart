@@ -15,11 +15,19 @@ logger = logging.getLogger(__name__)
 
 @app.route('/')
 def index():
-    cur = mysql.connection.cursor()
-    result = cur.execute("SELECT * from product")
-    products = cur.fetchall()
-    print("PRODUCT = ",products)
-    return render_template('index.html', products=products)
+    logger.info('Entered index method')
+    logger.info("Generating token")
+    token = jwt.encode({}, app.config['SECRET_KEY'])
+    token = token.decode('UTF-8')
+    headers = {'access-token': token, 'content-type': 'application/json'}
+    url = 'http://catalogue:5001/'
+    response = requests.post(url, headers=headers)
+    logger.debug('RESPONSE {}'.format( response.status_code))
+    if response.status_code is 200:
+        products = json.loads(response.content)['productDetails']
+        logger.debug('Products returned from catalogue {}'.format(products))
+        return render_template('index.html', products=products)
+    return render_template('index.html')
 
 # Check if user logged in
 def is_logged_in(f):
@@ -134,26 +142,6 @@ def cart():
         totalPrice = json.loads(response.content)['totalPrice']
         return render_template('cart.html', cart=cart, totalPrice= totalPrice)
     return render_template('cart-empty.html')
-
-@app.route('/price', methods=['POST'])
-def price():
-   logger.info("Entered the Catalogue service to fetch price of products")
-   data = json.loads(request.data)
-   productId = data['productId']
-   logger.debug("Product ID: {}".format(productId))
-   try:
-      cur = mysql.connection.cursor()
-      logger.debug("Executing query")
-      cur.execute("SELECT price FROM product WHERE product_id={}".format(productId))
-      logger.info("Executed query")
-      result = cur.fetchone()
-      logger.info("Fetched row")
-      price = result['price']
-      logger.debug("Price = {}".format(price))
-      return jsonify({"price": price}), 200
-   except:
-      logger.warning("Execution failed while retrieving price")
-      return 500
 
 @app.route('/place-order/<int:cartId>')
 @is_logged_in

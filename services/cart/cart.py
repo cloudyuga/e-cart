@@ -51,7 +51,7 @@ def addToCart():
          break
       logger.info("Making a request on Catalogue service to obtain the price of the product")
       headers = {'content-type': 'application/json'}
-      url = 'http://app:5000/price'
+      url = 'http://catalogue:5001/price'
       data = {"productId": data['productId']}
       data = json.dumps(data)
       response = requests.post(url, data=data, headers=headers)        

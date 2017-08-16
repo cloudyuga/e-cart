@@ -6,7 +6,7 @@
     {% for product in products %}
       <img src="{{ product.location }}" width="200" height="137" hspace="5" vspace="5"/>
       <br>
-      <a class="btn btn-success" href="add-to-cart/{{ product.product_id }}" align="centre"> Add To Cart</a>
+      <a class="btn btn-success" href="add-to-cart/{{ product._id }}" align="centre"> Add To Cart</a>
       <br>
     {% endfor %}
   </div>

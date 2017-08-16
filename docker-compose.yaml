@@ -19,6 +19,16 @@ services:
    MYSQL_DB_HOST: db
    MYSQL_DB_PASSWORD: test
 
+ cataloguedb:
+  image: mongo
+  volumes:
+   - cataloguedb_data:/data/db
+
+ catalogue:
+  build: ./services/catalogue
+  ports:
+   - "5001:5001"
+
  userdb:
   image: mongo
   volumes:
@@ -65,3 +75,4 @@ volumes:
  ordersdb_data:
  cartdb_data:
  userdb_data:
+ cataloguedb_data:
