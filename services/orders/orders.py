@@ -39,7 +39,7 @@ def placeOrder():
      order = db.orders.find_one({'cart_id': data['cartId']})
      headers = {'content-type': 'application/json'} 
      data = json.dumps(data)
-     url = 'http://app:5000/change-state'
+     url = 'http://cart:5003/change-state'
      logger.info("Making a request to Cart to change the cart state")
      response = requests.post(url, data=data, headers=headers)
      logger.debug("Response from Cart: {}".format(response.status_code))
@@ -90,7 +90,7 @@ def orders():
        logger.info("Fetching all orders")
        for cartId in data['cartIds']:
           logger.debug("Cart ID: {}".format(cartId))
-          order = db.orders.find_one({'cart_id': cartId['cart_id']})
+          order = db.orders.find_one({'cart_id': cartId})
           logger.debug("Order: {}".format(order))
           orders.append(order)
        logger.debug("Orders: {}".format(orders))

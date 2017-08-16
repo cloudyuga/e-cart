@@ -1,7 +1,6 @@
 from app import app
 from app.config import mysql
-from flask import render_template
-from app.cart.cart import addToCart, getAllCartId
+from flask import redirect, url_for, render_template, session, request, jsonify, flash
 import logging
 import jwt
 import requests
@@ -18,6 +17,65 @@ def index():
     print("PRODUCT = ",products)
     return render_template('index.html', products=products)
 
+@app.route('/add-to-cart/<int:id>')
+def addToCart(id):
+    logger.info("Entered add to cart method")
+    productId = id
+    data = {"productId": productId, "userId": session['userId']}
+    data = json.dumps(data)
+    logger.info("Received product ID")
+    logger.info("Generating token")
+    token = jwt.encode({}, app.config['SECRET_KEY'])
+    token = token.decode('UTF-8')
+    headers = {'access-token': token, 'content-type': 'application/json'}
+    url = 'http://cart:5003/add-to-cart'
+    response = requests.post(url, data=data, headers=headers)
+    logger.debug("Response from Cart: {}".format(response.status_code))
+    if response.status_code is 200:
+        flash('You have successfully added this product to your cart','success')
+        return redirect(url_for('index'))
+    return redirect(url_for('index'))
+
+@app.route('/cart')
+def cart():
+    logger.info("Entered cart method")
+    logger.info("Generating token")
+    token = jwt.encode({}, app.config['SECRET_KEY'])
+    token = token.decode('UTF-8')
+    headers = {'access-token': token, 'content-type': 'application/json'}
+    url = 'http://cart:5003/cart'
+    data = {"userId": session['userId']}
+    data = json.dumps(data)
+    logger.info("Received logged in user's ID")
+    response = requests.post(url, data=data, headers=headers)
+    logger.debug("Response from cart: {}".format(response.status_code))
+    if response.status_code is 200:
+        logger.info("Loading cart items")
+        cart = json.loads(response.content)['cart']
+        logger.info("Loading total price")
+        totalPrice = json.loads(response.content)['totalPrice']
+        return render_template('cart.html', cart=cart, totalPrice= totalPrice)
+    return render_template('cart-empty.html')
+
+@app.route('/price', methods=['POST'])
+def price():
+   logger.info("Entered the Catalogue service to fetch price of products")
+   data = json.loads(request.data)
+   productId = data['productId']
+   logger.debug("Product ID: {}".format(productId))
+   try:
+      cur = mysql.connection.cursor()
+      logger.debug("Executing query")
+      cur.execute("SELECT price FROM product WHERE product_id={}".format(productId))
+      logger.info("Executed query")
+      result = cur.fetchone()
+      logger.info("Fetched row")
+      price = result['price']
+      logger.debug("Price = {}".format(price))
+      return jsonify({"price": price}), 200
+   except:
+      logger.warning("Execution failed")
+      return 500
 
 @app.route('/place-order/<int:cartId>')
 def placeOrder(cartId):
@@ -42,20 +100,24 @@ def placeOrder(cartId):
 @app.route('/orders')
 def orders():
      logger.info("Entered orders method")
+     data = {"userId": session['userId']}
+     data = json.dumps(data)
+     logger.info("Generating token")
      token = jwt.encode({}, app.config['SECRET_KEY'])
      token = token.decode('UTF-8')
      headers = {'access-token': token, 'content-type': 'application/json'}
-     cartIds = getAllCartId()
-     logger.debug("Received cart ID: {}".format(cartIds))
-     data = {"cartIds": cartIds}
-     data = json.dumps(data)
-     url = 'http://orders:5004/orders'
+     url = 'http://cart:5003/get-all-cart-id'
      response = requests.post(url, data=data, headers=headers)
-     logger.debug("Response from Orders: {}".format(response.status_code))
+     logger.debug("Response from Cart: {}".format(response.status_code))
      if response.status_code is 200:
-         data = json.loads(response.content)
-         logger.debug("Data from Orders: {}".format(data)) 
-         return render_template('orders.html', orders=data)
+        data = response.content 
+        url = 'http://orders:5004/orders'
+        response = requests.post(url, data=data, headers=headers)
+        logger.debug("Response from Orders: {}".format(response.status_code))
+        if response.status_code is 200:
+           data = json.loads(response.content)
+           logger.debug("Data from Orders: {}".format(data)) 
+           return render_template('orders.html', orders=data)
      return render_template('index.html')
 
 @app.route('/payment/<int:id>')

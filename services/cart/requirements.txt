@@ -1,0 +1,7 @@
+flask
+configobj
+passlib
+Flask-WTF
+requests
+pymongo
+pyjwt
