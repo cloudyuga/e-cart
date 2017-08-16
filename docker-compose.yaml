@@ -19,5 +19,16 @@ services:
    MYSQL_DB_HOST: db
    MYSQL_DB_PASSWORD: test
 
+ paymentdb:
+  image: mongo
+  volumes:
+   - paymentdb_data:/data/db
+   
+ payment:
+  build: ./services/payment/
+  ports:
+   - "5005:5005"
+
 volumes:
  db_data:
+ paymentdb_data:

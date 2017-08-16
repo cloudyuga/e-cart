@@ -64,21 +64,3 @@ CREATE TABLE `orders` (
   KEY `cart_id` (`cart_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`)
 );
-
-
-DROP TABLE IF EXISTS `payment`;
-
-CREATE TABLE `payment` (
-  `payment_id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) DEFAULT NULL,
-  `paid_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`payment_id`),
-  KEY `order_id` (`order_id`),
-  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
-);
-
-
-
-
-
-

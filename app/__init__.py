@@ -6,4 +6,3 @@ from app.home import home
 from app.user import register, login
 from app.cart import cart
 from app.orders import orders
-from app.payment import payment

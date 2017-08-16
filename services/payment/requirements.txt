@@ -1,6 +1,7 @@
 flask
+configobj
 passlib
-flask-mysqldb
 Flask-WTF
-pyjwt
 requests
+pymongo
+pyjwt
