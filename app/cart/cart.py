@@ -35,4 +35,4 @@ def cart():
         totalPrice = totalPrice['total_price']
         return render_template('cart.html', cart=cart, totalPrice=totalPrice)
     else:
-        return render_template('cartEmpty.html')
+        return render_template('cart-empty.html')
