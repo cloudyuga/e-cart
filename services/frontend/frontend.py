@@ -1,9 +1,7 @@
-from app import app
-from app.config import mysql
-from flask import redirect, url_for, render_template, session, request, jsonify, flash
+from flask import Flask, redirect, url_for, render_template, session, request, jsonify, flash
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from passlib.hash import sha256_crypt
-from app.forms.register import RegisterForm
+from forms.register import RegisterForm
 from functools import wraps
 import logging
 import jwt
@@ -12,6 +10,9 @@ import json
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret'
 
 @app.route('/')
 def index():
@@ -206,3 +207,5 @@ def payment(id):
         logger.info("Rendering payment page")
         return render_template('payment.html')
     return render_template('payment-failure.html')
+
+app.run(port=5000, debug=True, host='0.0.0.0')
