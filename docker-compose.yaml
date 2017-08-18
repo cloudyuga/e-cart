@@ -25,7 +25,7 @@ services:
    - userdb_data:/data/db
 
  user:
-  build: ./services/user
+  image: peterfebin/user
   ports:
    - "5002:5002"
 
@@ -35,7 +35,7 @@ services:
    - cartdb_data:/data/db
 
  cart:
-  build: ./services/cart
+  image: peterfebin/cart-initial
   ports:
    - "5003:5003"
 
@@ -45,7 +45,7 @@ services:
    - ordersdb_data:/data/db
 
  orders:
-  build: ./services/orders
+  image: peterfebin/orders
   ports:
    - "5004:5004"
 
@@ -55,7 +55,7 @@ services:
    - paymentdb_data:/data/db
    
  payment:
-  build: ./services/payment/
+  image: peterfebin/payment
   ports:
    - "5005:5005"
 
