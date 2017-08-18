@@ -52,15 +52,3 @@ CREATE TABLE `cart_items` (
   CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`),
   CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`)
 );
-
-DROP TABLE IF EXISTS `orders`;
-
-CREATE TABLE `orders` (
-  `order_id` int(11) NOT NULL AUTO_INCREMENT,
-  `cart_id` int(11) DEFAULT NULL,
-  `order_status` varchar(50) DEFAULT NULL,
-  `orderDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`order_id`),
-  KEY `cart_id` (`cart_id`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`)
-);
