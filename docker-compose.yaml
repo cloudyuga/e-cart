@@ -25,7 +25,7 @@ services:
    - paymentdb_data:/data/db
    
  payment:
-  build: ./services/payment/
+  image: peterfebin/payment-initial
   ports:
    - "5005:5005"
 
