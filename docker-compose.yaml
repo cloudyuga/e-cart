@@ -25,7 +25,7 @@ services:
    - ordersdb_data:/data/db
 
  orders:
-  image: peterfebin/orders-initial
+  image: teamcloudyuga/orders-with-monolith
   ports:
    - "5004:5004"
 
@@ -35,7 +35,7 @@ services:
    - paymentdb_data:/data/db
    
  payment:
-  image: peterfebin/payment
+  image: teamcloudyuga/payment
   ports:
    - "5005:5005"
 
