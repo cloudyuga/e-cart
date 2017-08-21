@@ -25,7 +25,7 @@ services:
    - userdb_data:/data/db
 
  user:
-  image: peterfebin/user
+  image: teamcloudyuga/user
   ports:
    - "5002:5002"
 
@@ -35,7 +35,7 @@ services:
    - cartdb_data:/data/db
 
  cart:
-  image: peterfebin/cart-initial
+  image: teamcloudyuga/cart-with-monolith
   ports:
    - "5003:5003"
 
@@ -45,7 +45,7 @@ services:
    - ordersdb_data:/data/db
 
  orders:
-  image: peterfebin/orders
+  image: teamcloudyuga/orders
   ports:
    - "5004:5004"
 
@@ -55,7 +55,7 @@ services:
    - paymentdb_data:/data/db
    
  payment:
-  image: peterfebin/payment
+  image: teamcloudyuga/payment
   ports:
    - "5005:5005"
 
