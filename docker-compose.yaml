@@ -25,7 +25,7 @@ services:
    - paymentdb_data:/data/db
    
  payment:
-  image: peterfebin/payment-initial
+  image: teamcloudyuga/payment-with-monolith
   ports:
    - "5005:5005"
 
