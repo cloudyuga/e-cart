@@ -38,6 +38,8 @@ Payment is now a separate entity without any dependency on the monolith. It has 
 
 The communication with the monolith happens through API calls.
 
+[Github Repo](https://github.com/cloudyuga/e-cart/tree/first-breakdown-payment-service)
+
 ## Extracting Orders Service from Monolith
 ![](images/Orders.jpeg?raw=true)
 
