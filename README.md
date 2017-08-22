@@ -3,7 +3,7 @@
 Orders service is extracted from the monolith.  It now runs as an individual service with MongoDB as its own database. 
 It comunicates with the monolith and Payment service through API calls.
 
-![](images/Payment.jpeg?raw=true)
+![](images/Orders.jpeg?raw=true)
 
 # Steps to run the application
 Prerequiste: git, docker and docker-compose needs to be installed on the host machine
