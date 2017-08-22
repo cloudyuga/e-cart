@@ -65,6 +65,7 @@ User service is extracted from monolith and it now communicates with monolith th
 
 ## Extracting Catalogue from Monolith
 [Github Repo](https://github.com/cloudyuga/e-cart/tree/fifth-breakdown-catalogue)
+
 Once we extract the Catalogue service from monolith, our monolith is left with just the Frontend. We make Frontend as an individual service as well.
 ![](images/Catalogue.jpeg?raw=true)
 
