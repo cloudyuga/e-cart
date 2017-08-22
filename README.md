@@ -3,7 +3,7 @@
 Catalogue service is extracted from the monolith.  It now runs as an individual service with MongoDB as its own database. 
 It comunicates with the monolith through API calls.
 
-![](images/Catalogue.jpeg?raw=true)
+At this step, the monolith is left with just the Frontend, which will be extracted in the next branch.
 
 # Steps to run the application
 Prerequiste: git, docker and docker-compose needs to be installed on the host machine
