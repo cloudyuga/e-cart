@@ -1,6 +1,6 @@
-# "Payment service" removed as an individual service from monolith ?
+# "Payment service" extracted as an individual service from monolith
 
-Payment service is removed from the monolith.  It now runs as an individual service with MongoDB as its own database. 
+Payment service is extracted from the monolith.  It now runs as an individual service with MongoDB as its own database. 
 It comunicates with the monolith through API calls.
 
 ![](images/Payment.jpeg?raw=true)
