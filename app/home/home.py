@@ -1,5 +1,4 @@
 from app import app
-from app.config import mysql
 from flask import redirect, url_for, render_template, session, request, jsonify, flash
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from passlib.hash import sha256_crypt
