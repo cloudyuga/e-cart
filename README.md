@@ -5,8 +5,6 @@ It comunicates with the monolith through API calls.
 
 At this step, the monolith is left with just the Frontend, which will be extracted in the next branch.
 
-![](images/Catalogue.jpeg?raw=true)
-
 # Steps to run the application
 Prerequiste: git, docker and docker-compose needs to be installed on the host machine
 
