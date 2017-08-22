@@ -3,6 +3,8 @@
 Catalogue service is extracted from the monolith.  It now runs as an individual service with MongoDB as its own database. 
 It comunicates with the monolith through API calls.
 
+At this step, the monolith is left with just the Frontend, which will be extracted in the next branch.
+
 ![](images/Catalogue.jpeg?raw=true)
 
 # Steps to run the application
