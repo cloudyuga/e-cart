@@ -8,8 +8,11 @@ services:
 
  cataloguedb:
   image: mongo
+  environment:
+   MONGO_INITDB_DATABASE: productDb
   volumes:
    - cataloguedb_data:/data/db
+   - ./nosqldump/data:/docker-entrypoint-initdb.d
 
  catalogue:
   image: teamcloudyuga/catalogue
