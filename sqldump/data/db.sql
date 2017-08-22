@@ -13,7 +13,14 @@ CREATE TABLE `product` (
   PRIMARY KEY (`product_id`)
 );
 
-INSERT INTO `product` VALUES (1,'nike','shoe',11,'/static/shoe.jpg'),(2,'iphone','mobile',100,'/static/mobile.jpg');
+INSERT INTO `product` VALUES (1,'nike','shoe',11,'/static/shoe.jpg'),
+                             (2,'iphone','mobile',100,'/static/mobile.jpg'),
+                             (3, 'titan', 'watch', 50, '/static/watch.jpeg'),
+                             (4, 'philips', 'speaker', 75, '/static/speaker.jpeg'),
+                             (5, 'adidas', 'tshirt', 60, '/static/tshirt.jpeg'),
+                             (6, 'sony', 'tv', 1000, '/static/tv.jpg'),
+                             (7, 'seagate', 'harddisk', 200, '/static/harddisk.jpg'),
+                             (8, 'journal', 'book', 30, '/static/journal.jpg');
 
 DROP TABLE IF EXISTS `user`;
 
