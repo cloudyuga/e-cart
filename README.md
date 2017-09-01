@@ -12,6 +12,7 @@ Prerequiste: git, docker and docker-compose needs to be installed on the host ma
 $ git clone https://github.com/cloudyuga/e-cart.git
 $ cd e-cart
 $ git checkout second-breakdown-orders
+$ docker-compose build
 $ docker-compose up -d
 ```
 The application now runs in http://localhost:5000
