@@ -9,6 +9,8 @@ Prerequiste: git, docker and docker-compose needs to be installed on the host ma
 
 ```sh
 $ git clone https://github.com/cloudyuga/e-cart.git
+# This is the default branch. Perform this step only if you are checking out from any other branch to this one
+$ git checkout monolith
 $ cd e-cart
 $ docker-compose build
 $ docker-compose up -d
