@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: cataloguedb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        appdb: cataloguedb
+    spec:
+      volumes:
+        - name: voldb
+          emptyDir: {}
+        - name: demo
+          emptyDir: {}
+      initContainers:
+      - image: busybox
+        name: init-db
+        volumeMounts:
+        - name: demo
+          mountPath: /tmp/data
+        command: ["/bin/sh", "-c", "wget https://raw.githubusercontent.com/vishalcloudyuga/e-cart/master/nosqldump/data/productData.js -O /tmp/data/productData.js"] 
+      containers:
+      - name: cataloguedb
+        image: mongo
+        env:
+        - name: MONGO_INITDB_DATABASE
+          value: productDb
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: voldb
+          mountPath: /data/db
+        - name: demo
+          mountPath: /docker-entrypoint-initdb.d
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cataloguedb
+  labels:
+    app: cataloguedb
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+  selector:
+    appdb: cataloguedb
