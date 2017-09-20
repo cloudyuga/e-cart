@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ecartdb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        appdb: ecartdb
+    spec:
+      volumes:
+        - name: voldb
+          emptyDir: {}
+        - name: demo
+          emptyDir: {}
+      initContainers:
+      - image: busybox
+        name: init-db
+        volumeMounts:
+        - name: demo
+          mountPath: /tmp/data
+        command: ["/bin/sh", "-c", "wget https://raw.githubusercontent.com/cloudyuga/e-cart/third-breakdown-cart/sqldump/data/db.sql -O /tmp/data/db.sql"] 
+      containers:
+      - name: ecart-db
+        image: mariadb
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: test
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: voldb
+          mountPath: /var/lib/mysql
+        - name: demo
+          mountPath: /docker-entrypoint-initdb.d
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  labels:
+    app: ecartdb
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+  selector:
+    appdb: ecartdb
