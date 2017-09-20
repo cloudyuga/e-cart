@@ -1,0 +1,68 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: cart
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cart
+    spec:
+      containers:
+      - name: cart
+        image: teamcloudyuga/cart-with-monolith
+        ports:
+        - containerPort: 5003
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cart
+  labels:
+    app: cart
+spec:
+  ports:
+  - port: 5003
+    targetPort: 5003
+    protocol: TCP
+  selector:
+    app: cart
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: cartdb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cartdb
+    spec:
+      volumes:
+        - name: cartdb
+          emptyDir: {}
+      containers:
+      - name: cartdb
+        image: mongo
+        volumeMounts:
+        - name: cartdb
+          mountPath: /data/db
+        ports:
+        - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cartdb
+  labels:
+    app: cartdb
+spec:
+  ports:
+  - port: 27017
+    protocol: TCP
+  selector:
+    app: cartdb
