@@ -4,3 +4,4 @@ flask-mysqldb
 Flask-WTF
 pyjwt
 requests
+pyyaml
