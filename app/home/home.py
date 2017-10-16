@@ -9,6 +9,8 @@ import logging
 import jwt
 import requests
 import json
+import os
+import yaml
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -36,6 +38,9 @@ def is_logged_in(f):
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     logger.info("Entered register method")
+    directoryPath = os.path.dirname(os.path.realpath(__file__))
+    with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         registerUrl = yaml.load(stream)['registerUrl']
     form = RegisterForm(request.form)
     if request.method == 'POST' and form.validate():
         email = form.email.data
@@ -48,7 +53,7 @@ def register():
         token = jwt.encode({}, app.config['SECRET_KEY'])
         token = token.decode('UTF-8')
         headers = {'access-token': token, 'content-type': 'application/json'}        
-        url = 'http://user:5002/register'
+        url = registerUrl
         response = requests.post(url, data=data, headers=headers)
         logger.info("Response from Register: {}".format(response.status_code))
         if response.status_code is 200:
@@ -59,6 +64,9 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     logger.info("Entered login method")
+    directoryPath = os.path.dirname(os.path.realpath(__file__))
+    with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         loginUrl = yaml.load(stream)['loginUrl']
     if request.method == 'POST':
         # Get Form Fields
         username = request.form['username']
@@ -70,7 +78,7 @@ def login():
         token = jwt.encode({}, app.config['SECRET_KEY'])
         token = token.decode('UTF-8')
         headers = {'access-token': token, 'content-type': 'application/json'}
-        url = 'http://user:5002/login'
+        url = loginUrl
         response = requests.post(url, data=data, headers=headers)
         logger.debug("Reponse from Login: {}".format(response.status_code))
         if response.status_code is 200:
@@ -96,6 +104,9 @@ def logout():
 @is_logged_in
 def addToCart(id):
     logger.info("Entered add to cart method")
+    directoryPath = os.path.dirname(os.path.realpath(__file__))
+    with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         addToCartUrl = yaml.load(stream)['addToCartUrl']
     productId = id
     data = {"productId": productId, "userId": session['userId']}
     data = json.dumps(data)
@@ -105,7 +116,7 @@ def addToCart(id):
     token = token.decode('UTF-8')
     headers = {'access-token': token, 'content-type': 'application/json'}
     logger.info("Making a request on Cart service")
-    url = 'http://cart:5003/add-to-cart'
+    url = addToCartUrl
     response = requests.post(url, data=data, headers=headers)
     logger.debug("Response from Cart: {}".format(response.status_code))
     if response.status_code is 200:
@@ -117,11 +128,14 @@ def addToCart(id):
 @is_logged_in
 def cart():
     logger.info("Entered cart method")
+    directoryPath = os.path.dirname(os.path.realpath(__file__))
+    with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         cartUrl = yaml.load(stream)['cartUrl']
     logger.info("Generating token")
     token = jwt.encode({}, app.config['SECRET_KEY'])
     token = token.decode('UTF-8')
     headers = {'access-token': token, 'content-type': 'application/json'}
-    url = 'http://cart:5003/cart'
+    url = cartUrl
     data = {"userId": session['userId']}
     data = json.dumps(data)
     logger.info("Received logged in user's ID")
@@ -159,11 +173,14 @@ def price():
 @is_logged_in
 def placeOrder(cartId):
     logger.info('Entered place order method')
+    directoryPath = os.path.dirname(os.path.realpath(__file__))
+    with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         placeOrderUrl = yaml.load(stream)['placeOrderUrl']
     logger.info("Generating token")
     token = jwt.encode({}, app.config['SECRET_KEY'])
     token = token.decode('UTF-8')
     headers = {'access-token': token, 'content-type': 'application/json'} 
-    url = 'http://orders:5004/place-order'
+    url = placeOrderUrl
     data = {"cartId": cartId}
     data = json.dumps(data)
     logger.info("Loaded cart ID")
@@ -180,18 +197,23 @@ def placeOrder(cartId):
 @is_logged_in
 def orders():
      logger.info("Entered orders method")
+     directoryPath = os.path.dirname(os.path.realpath(__file__))
+     with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         ordersUrl = yaml.load(stream)['ordersUrl'] 
+     with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         getAllCartIdUrl = yaml.load(stream)['getAllCartIdUrl']  
      data = {"userId": session['userId']}
      data = json.dumps(data)
      logger.info("Generating token")
      token = jwt.encode({}, app.config['SECRET_KEY'])
      token = token.decode('UTF-8')
      headers = {'access-token': token, 'content-type': 'application/json'}
-     url = 'http://cart:5003/get-all-cart-id'
+     url = getAllCartIdUrl
      response = requests.post(url, data=data, headers=headers)
      logger.debug("Response from Cart: {}".format(response.status_code))
      if response.status_code is 200:
         data = response.content 
-        url = 'http://orders:5004/orders'
+        url = ordersUrl
         response = requests.post(url, data=data, headers=headers)
         logger.debug("Response from Orders: {}".format(response.status_code))
         if response.status_code is 200:
@@ -204,12 +226,15 @@ def orders():
 @is_logged_in
 def payment(id):
     logger.info("Entered payment method")
+    directoryPath = os.path.dirname(os.path.realpath(__file__))
+    with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         paymentUrl = yaml.load(stream)['paymentUrl']
     orderId = id
     logger.info("Generating token")
     token = jwt.encode({}, app.config['SECRET_KEY'])
     token = token.decode('UTF-8')
     headers = {'access-token': token, 'content-type': 'application/json'}
-    url = 'http://payment:5005/payment'
+    url = paymentUrl
     data = {"orderId": orderId}
     data = json.dumps(data)
     response = requests.post(url, data=data, headers=headers)
