@@ -24,7 +24,7 @@ def index():
 def payment(id):
     directoryPath = os.path.dirname(os.path.realpath(__file__))
     logger.info("Entered payment method")
-    with open("%s/../config.yaml" % directoryPath, 'r') as stream:
+    with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
          paymentUrl = yaml.load(stream)['paymentUrl']
     orderId = id
     logger.info("Generating token")
