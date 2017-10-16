@@ -1,0 +1,2 @@
+paymentUrl: 'http://payment:5005/payment'
+ordersUrl:  'http://orders:5004/orders'
