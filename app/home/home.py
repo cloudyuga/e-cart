@@ -6,6 +6,8 @@ import logging
 import jwt
 import requests
 import json
+import yaml
+import os
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -42,6 +44,9 @@ def placeOrder(cartId):
 @app.route('/orders')
 def orders():
      logger.info("Entered orders method")
+     directoryPath = os.path.dirname(os.path.realpath(__file__))        
+     with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         ordersUrl = yaml.load(stream)['ordersUrl']
      token = jwt.encode({}, app.config['SECRET_KEY'])
      token = token.decode('UTF-8')
      headers = {'access-token': token, 'content-type': 'application/json'}
@@ -49,7 +54,7 @@ def orders():
      logger.debug("Received cart ID: {}".format(cartIds))
      data = {"cartIds": cartIds}
      data = json.dumps(data)
-     url = 'http://orders:5004/orders'
+     url = ordersUrl
      response = requests.post(url, data=data, headers=headers)
      logger.debug("Response from Orders: {}".format(response.status_code))
      if response.status_code is 200:
@@ -61,12 +66,15 @@ def orders():
 @app.route('/payment/<int:id>')
 def payment(id):
     logger.info("Entered payment method")
+    directoryPath = os.path.dirname(os.path.realpath(__file__))    
     orderId = id
     logger.info("Generating token")
+    with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         paymentUrl = yaml.load(stream)['paymentUrl']
     token = jwt.encode({}, app.config['SECRET_KEY'])
     token = token.decode('UTF-8')
     headers = {'access-token': token, 'content-type': 'application/json'}
-    url = 'http://payment:5005/payment'
+    url = paymentUrl
     data = {"orderId": orderId}
     data = json.dumps(data)
     response = requests.post(url, data=data, headers=headers)
