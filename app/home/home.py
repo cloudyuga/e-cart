@@ -8,6 +8,8 @@ import logging
 import jwt
 import requests
 import json
+import os
+import yaml
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
