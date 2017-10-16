@@ -20,6 +20,9 @@ def index():
 @app.route('/add-to-cart/<int:id>')
 def addToCart(id):
     logger.info("Entered add to cart method")
+    directoryPath = os.path.dirname(os.path.realpath(__file__))
+    with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         addToCartUrl = yaml.load(stream)['addToCartUrl']
     productId = id
     data = {"productId": productId, "userId": session['userId']}
     data = json.dumps(data)
@@ -28,7 +31,7 @@ def addToCart(id):
     token = jwt.encode({}, app.config['SECRET_KEY'])
     token = token.decode('UTF-8')
     headers = {'access-token': token, 'content-type': 'application/json'}
-    url = 'http://cart:5003/add-to-cart'
+    url = addToCartUrl
     response = requests.post(url, data=data, headers=headers)
     logger.debug("Response from Cart: {}".format(response.status_code))
     if response.status_code is 200:
@@ -39,11 +42,14 @@ def addToCart(id):
 @app.route('/cart')
 def cart():
     logger.info("Entered cart method")
+    directoryPath = os.path.dirname(os.path.realpath(__file__))
+    with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         cartUrl = yaml.load(stream)['cartUrl']
     logger.info("Generating token")
     token = jwt.encode({}, app.config['SECRET_KEY'])
     token = token.decode('UTF-8')
     headers = {'access-token': token, 'content-type': 'application/json'}
-    url = 'http://cart:5003/cart'
+    url = cartUrl
     data = {"userId": session['userId']}
     data = json.dumps(data)
     logger.info("Received logged in user's ID")
@@ -80,11 +86,14 @@ def price():
 @app.route('/place-order/<int:cartId>')
 def placeOrder(cartId):
     logger.info('Entered place order method')
+    directoryPath = os.path.dirname(os.path.realpath(__file__))
+    with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         placeOrderUrl = yaml.load(stream)['placeOrderUrl']
     logger.info("Generating token")
     token = jwt.encode({}, app.config['SECRET_KEY'])
     token = token.decode('UTF-8')
     headers = {'access-token': token, 'content-type': 'application/json'} 
-    url = 'http://orders:5004/place-order'
+    url = placeOrderUrl
     data = {"cartId": cartId}
     data = json.dumps(data)
     logger.info("Loaded cart ID")
@@ -100,6 +109,9 @@ def placeOrder(cartId):
 @app.route('/orders')
 def orders():
      logger.info("Entered orders method")
+     directoryPath = os.path.dirname(os.path.realpath(__file__))
+     with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         ordersUrl = yaml.load(stream)['ordersUrl']
      data = {"userId": session['userId']}
      data = json.dumps(data)
      logger.info("Generating token")
@@ -111,7 +123,7 @@ def orders():
      logger.debug("Response from Cart: {}".format(response.status_code))
      if response.status_code is 200:
         data = response.content 
-        url = 'http://orders:5004/orders'
+        url = ordersUrl
         response = requests.post(url, data=data, headers=headers)
         logger.debug("Response from Orders: {}".format(response.status_code))
         if response.status_code is 200:
@@ -123,12 +135,15 @@ def orders():
 @app.route('/payment/<int:id>')
 def payment(id):
     logger.info("Entered payment method")
+    directoryPath = os.path.dirname(os.path.realpath(__file__))
+    with open("%s/../endpoints.yaml" % directoryPath, 'r') as stream:
+         paymentUrl = yaml.load(stream)['paymentUrl']
     orderId = id
     logger.info("Generating token")
     token = jwt.encode({}, app.config['SECRET_KEY'])
     token = token.decode('UTF-8')
     headers = {'access-token': token, 'content-type': 'application/json'}
-    url = 'http://payment:5005/payment'
+    url = paymentUrl
     data = {"orderId": orderId}
     data = json.dumps(data)
     response = requests.post(url, data=data, headers=headers)
