@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+ app:
+  image: coolvbgarya/ecart:fifthv1
+  ports: 
+   - "5000:5000"
+
+ cataloguedb:
+  image: mongo
+  environment:
+   MONGO_INITDB_DATABASE: productDb
+  volumes:
+   - cataloguedb_data:/data/db
+   - ./nosqldump/data:/docker-entrypoint-initdb.d
+
+ catalogue:
+  image: teamcloudyuga/catalogue
+  ports:
+   - "5001:5001"
+
+ userdb:
+  image: mongo
+  volumes:
+   - userdb_data:/data/db
+
+ user:
+  image: teamcloudyuga/user
+  ports:
+   - "5002:5002"
+
+ cartdb:
+  image: mongo
+  volumes:
+   - cartdb_data:/data/db
+
+ cart:
+  image: teamcloudyuga/cart
+  ports:
+   - "5003:5003"
+
+ ordersdb:
+  image: mongo
+  volumes:
+   - ordersdb_data:/data/db
+
+ orders:
+  image: teamcloudyuga/orders
+  ports:
+   - "5004:5004"
+
+ paymentdb:
+  image: mongo
+  volumes:
+   - paymentdb_data:/data/db
+   
+ payment:
+  image: teamcloudyuga/payment
+  ports:
+   - "5005:5005"
+
+volumes:
+ db_data:
+ paymentdb_data:
+ ordersdb_data:
+ cartdb_data:
+ userdb_data:
+ cataloguedb_data:
