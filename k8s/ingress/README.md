@@ -127,4 +127,4 @@ vhost-ingress   cy.myweb.com   165.227.65.31   80        1m
 ```
 Edit the `/etc/hosts` file  on your host from where you want to access the application and create records of `cy.myweb.com` with above shown address for me it is `165.227.65.31`.
 
-Now open browser. and try to access the http://cy.myweb.com/ you will access the E-cart web application.
+Now open browser and try to access the http://cy.myweb.com/ you will access the E-cart web application.
