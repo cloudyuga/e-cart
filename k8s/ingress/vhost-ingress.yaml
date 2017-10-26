@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: web-ingress
+  name: vhost-ingress
 spec:
   rules:
   - host: cy.myweb.com
