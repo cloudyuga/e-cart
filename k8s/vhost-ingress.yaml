@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: web-ingress
+spec:
+  rules:
+  - host: cy.myweb.com
+    http:
+      paths:
+      - backend:
+          serviceName: frontend
+          servicePort: 5000
