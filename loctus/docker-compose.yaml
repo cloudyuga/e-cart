@@ -1,0 +1,13 @@
+version: "3"
+services:
+  locust-master:
+    image: swernst/locusts
+    volumes:
+      - ./scripts:/scripts
+    ports:
+      - "8089:8089"
+  locust-worker:
+    image: swernst/locusts
+    command: "--master-host=locust-master"
+    volumes:
+      - ./scripts:/scripts

@@ -1,0 +1,4 @@
+{
+  "target": "http://104.236.13.175:32390",
+  "locusts": ["HelloLocust"]
+}
