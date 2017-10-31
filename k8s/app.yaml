@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: coolvbgarya/ecart:fifthv1
+        image: teamcloudyuga/ecart:fifthv1
         ports:
         - containerPort: 5000
 ---
