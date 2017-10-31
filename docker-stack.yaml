@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+ db:
+  image: mariadb
+  environment:
+   MYSQL_ROOT_PASSWORD: test
+  volumes:
+   - db_data:/var/lib/mysql
+   - ./sqldump/data:/docker-entrypoint-initdb.d
+  ports:
+   - "3306:3306"
+
+ app:
+  image: coolvbgarya/ecart:thirdv1
+  ports: 
+   - "5000:5000"
+  environment: 
+   MYSQL_DB_HOST: db
+   MYSQL_DB_PASSWORD: test
+
+ cartdb:
+  image: mongo
+  volumes:
+   - cartdb_data:/data/db
+
+ cart:
+  image: teamcloudyuga/cart-with-monolith
+  ports:
+   - "5003:5003"
+
+ ordersdb:
+  image: mongo
+  volumes:
+   - ordersdb_data:/data/db
+
+ orders:
+  image: teamcloudyuga/orders
+  ports:
+   - "5004:5004"
+
+ paymentdb:
+  image: mongo
+  volumes:
+   - paymentdb_data:/data/db
+   
+ payment:
+  image: teamcloudyuga/payment
+  ports:
+   - "5005:5005"
+
+volumes:
+ db_data:
+ paymentdb_data:
+ ordersdb_data:
+ cartdb_data:
