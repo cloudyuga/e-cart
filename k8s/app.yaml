@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: coolvbgarya/ecart:monolith
+        image: teamcloudyuga/ecart:monolith
         env:
         - name: MYSQL_DB_HOST
           value: db
