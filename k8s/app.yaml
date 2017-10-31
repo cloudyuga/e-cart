@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: coolvbgarya/ecart:secondv1
+        image: teamcloudyuga/ecart:secondv1
         env:
         - name: MYSQL_DB_HOST
           value: db
