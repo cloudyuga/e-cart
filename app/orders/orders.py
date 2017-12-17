@@ -31,7 +31,7 @@ def updateOrderStatus():
     try:
         logger.info("Updating order status")
         cur = mysql.connection.cursor()
-        cur.execute("UPDATE orders SET order_status = 'Amount Paid' WHERE order_id={}".format(data['OrderId']))
+        cur.execute("UPDATE orders SET order_status = 'Amount Paid' WHERE order_id={}".format(data['orderId']))
         mysql.connection.commit()
         cur.close()   
         logger.info("Successfully leaving Orders")
