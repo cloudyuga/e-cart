@@ -2,7 +2,7 @@ version: '2'
 
 services:
  frontend:
-  image: teamcloudyuga/frontend
+  image: teamcloudyuga/frontend-prometheus
   ports:
    - "5000:5000" 
 
@@ -59,6 +59,19 @@ services:
   ports:
    - "5005:5005"
 
+ prometheus:
+  image: prom/prometheus
+  container_name: prometheus
+  volumes:
+   - ./config/prometheus/:/etc/prometheus/
+   - prometheus_data:/prometheus
+  command:
+   - '--config.file=/etc/prometheus/prometheus.yml'
+  expose:
+   - 9090
+  ports:
+   - 9090:9090
+
 volumes:
  db_data:
  paymentdb_data:
@@ -66,3 +79,4 @@ volumes:
  cartdb_data:
  userdb_data:
  cataloguedb_data:
+ prometheus_data:
