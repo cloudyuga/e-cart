@@ -55,9 +55,10 @@ services:
    - paymentdb_data:/data/db
    
  payment:
-  image: teamcloudyuga/payment-go
+  image: teamcloudyuga/payment-go-opentracing
   ports:
    - "5005:5005"
+   - "8700: 8700"
 
  prometheus:
   image: prom/prometheus
