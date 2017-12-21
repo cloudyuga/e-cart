@@ -41,4 +41,4 @@ scrape_configs:
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
     static_configs:
-        - targets: ['orders:5000']
+        - targets: ['orders:5004']
