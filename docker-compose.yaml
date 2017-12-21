@@ -35,7 +35,7 @@ services:
    - cartdb_data:/data/db
 
  cart:
-  image: teamcloudyuga/cart
+  image: teamcloudyuga/cart-prometheus
   ports:
    - "5003:5003"
 
@@ -45,7 +45,7 @@ services:
    - ordersdb_data:/data/db
 
  orders:
-  image: teamcloudyuga/orders-for-payment-go
+  image: teamcloudyuga/orders-prometheus
   ports:
    - "5004:5004"
 
