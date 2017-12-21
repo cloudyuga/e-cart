@@ -52,3 +52,13 @@ scrape_configs:
     # scheme defaults to 'http'.
     static_configs:
         - targets: ['cart:5003']
+
+  - job_name: 'user'
+
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+    static_configs:
+        - targets: ['user:5002']
