@@ -15,7 +15,7 @@ services:
    - ./nosqldump/data:/docker-entrypoint-initdb.d
 
  catalogue:
-  image: teamcloudyuga/catalogue
+  image: teamcloudyuga/catalogue-prometheus
   ports:
    - "5001:5001"
 
