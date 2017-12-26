@@ -29,9 +29,7 @@ metadata:
 spec:
   ports:
   - port: 5005
-    targetPort: paymentport
-    port: 8700
-    targetPort: open
+    targetPort: 5005
     protocol: TCP
   selector:
     app: payment
