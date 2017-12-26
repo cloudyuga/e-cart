@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: cart
-        image: teamcloudyuga/cart
+        image: teamcloudyuga/cart-prometheus
         ports:
         - containerPort: 5003
 ---
