@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: teamcloudyuga/frontend
+        image: teamcloudyuga/frontend-prometheus
         ports:
         - containerPort: 5000
 ---
