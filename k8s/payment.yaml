@@ -12,9 +12,12 @@ spec:
     spec:
       containers:
       - name: payment
-        image: teamcloudyuga/payment
+        image: teamcloudyuga/payment-go-opentracing
         ports:
         - containerPort: 5005
+          name: paymentport
+        - containerPort: 8700
+          name: open
 ---
 
 apiVersion: v1
@@ -26,7 +29,9 @@ metadata:
 spec:
   ports:
   - port: 5005
-    targetPort: 5005
+    targetPort: paymentport
+    port: 8700
+    targetPort: open
     protocol: TCP
   selector:
     app: payment
