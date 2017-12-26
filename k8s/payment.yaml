@@ -28,10 +28,12 @@ metadata:
     app: payment
 spec:
   ports:
-  - port: 5005
+  - name: p-port
+    port: 5005
     targetPort: 5005
     protocol: TCP
-  - port: 8700
+  - name: o-port
+    port: 8700
     targetPort: 8700
     protocol: TCP
   selector:
