@@ -39,8 +39,10 @@ metadata:
   labels:
     app: prometheus
 spec:
+  type: NodePort
   ports:
   - port: 9090
+    nodePort: 31900
     targetPort: 9090
     protocol: TCP
   selector:
