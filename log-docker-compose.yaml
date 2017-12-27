@@ -1,0 +1,113 @@
+version: '2'
+
+services:
+ frontend:
+  image: teamcloudyuga/frontend-prometheus
+  ports:
+   - "5000:5000" 
+  logging:
+    driver: "fluentd"
+    options:
+      fluentd-address: localhost:24224
+      tag: ecart-frontend
+
+ cataloguedb:
+  image: mongo
+  environment:
+   MONGO_INITDB_DATABASE: productDb
+  volumes:
+   - cataloguedb_data:/data/db
+   - ./nosqldump/data:/docker-entrypoint-initdb.d
+
+ catalogue:
+  image: teamcloudyuga/catalogue-prometheus
+  ports:
+   - "5001:5001"
+  logging:
+    driver: "fluentd"
+    options:
+      fluentd-address: localhost:24224
+      tag: ecart-catalog
+
+ userdb:
+  image: mongo
+  volumes:
+   - userdb_data:/data/db
+
+ user:
+  image: teamcloudyuga/user-prometheus
+  ports:
+   - "5002:5002"
+  logging:
+    driver: "fluentd"
+    options:
+      fluentd-address: localhost:24224
+      tag: ecart-user
+
+ cartdb:
+  image: mongo
+  volumes:
+   - cartdb_data:/data/db
+
+ cart:
+  image: teamcloudyuga/cart-prometheus
+  ports:
+   - "5003:5003"
+  logging:
+    driver: "fluentd"
+    options:
+      fluentd-address: localhost:24224
+      tag: ecart-cart
+
+ ordersdb:
+  image: mongo
+  volumes:
+   - ordersdb_data:/data/db
+
+ orders:
+  image: teamcloudyuga/orders-prometheus
+  ports:
+   - "5004:5004"
+  logging:
+    driver: "fluentd"
+    options:
+      fluentd-address: localhost:24224
+      tag: ecart-order
+
+ paymentdb:
+  image: mongo
+  volumes:
+   - paymentdb_data:/data/db
+   
+ payment:
+  image: teamcloudyuga/payment-go-opentracing
+  ports:
+   - "5005:5005"
+   - "8700:8700"
+  logging:
+    driver: "fluentd"
+    options:
+      fluentd-address: localhost:24224
+      tag: ecart-payment
+
+ prometheus:
+  image: prom/prometheus
+  container_name: prometheus
+  volumes:
+   - ./config/prometheus/:/etc/prometheus/
+   - prometheus_data:/prometheus
+  command:
+   - '--config.file=/etc/prometheus/prometheus.yml'
+  expose:
+   - 9090
+  ports:
+   - 9090:9090
+
+volumes:
+ db_data:
+ paymentdb_data:
+ ordersdb_data:
+ cartdb_data:
+ userdb_data:
+ cataloguedb_data:
+ prometheus_data:

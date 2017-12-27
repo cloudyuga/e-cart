@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: orders
-        image: teamcloudyuga/orders
+        image: teamcloudyuga/orders-prometheus
         ports:
         - containerPort: 5004
 ---

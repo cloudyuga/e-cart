@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: user
-        image: teamcloudyuga/user
+        image: teamcloudyuga/user-prometheus
         ports:
         - containerPort: 5002
 ---

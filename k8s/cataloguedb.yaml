@@ -20,7 +20,7 @@ spec:
         volumeMounts:
         - name: demo
           mountPath: /tmp/data
-        command: ["/bin/sh", "-c", "wget https://raw.githubusercontent.com/vishalcloudyuga/e-cart/master/nosqldump/data/productData.js -O /tmp/data/productData.js"] 
+        command: ["/bin/sh", "-c", "wget https://raw.githubusercontent.com/cloudyuga/e-cart/ninth-prometheus/nosqldump/data/productData.js -O /tmp/data/productData.js"] 
       containers:
       - name: cataloguedb
         image: mongo
