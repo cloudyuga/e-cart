@@ -16,6 +16,11 @@ $ git checkout seventh-frontend-prometheus
 $ docker-compose up -d
 ```
 The application now runs in http://localhost:5000
+
 Now make few requests such as register, login, add to cart, etc.
+
+
 Navigate to http://localhost:9090 to access Prometheues server
+
+
 In the expression field, enter request_count and click on Execute. This will display the number of requests made on the frontend. Clicking the graph tab will plot the graph.
