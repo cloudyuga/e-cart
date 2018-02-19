@@ -12,7 +12,7 @@ Prerequiste: git, docker and docker-compose needs to be installed on the host ma
 ```sh
 $ git clone https://github.com/cloudyuga/e-cart.git
 $ cd e-cart
-$ git checkout master
+$ git checkout seventh-frontend-prometheus
 $ docker-compose up -d
 ```
 The application now runs in http://localhost:5000
