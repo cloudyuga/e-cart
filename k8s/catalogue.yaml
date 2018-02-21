@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: catalogue
-        image: teamcloudyuga/catalogue-jaeger
+        image: teamcloudyuga/catalogue-jaeger-with-time-delay
         ports:
         - containerPort: 5001
       - image: jaegertracing/jaeger-agent
