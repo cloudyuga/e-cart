@@ -12,9 +12,22 @@ spec:
     spec:
       containers:
       - name: user
-        image: teamcloudyuga/user
+        image: teamcloudyuga/user-jaeger
         ports:
         - containerPort: 5002
+      - image: jaegertracing/jaeger-agent
+        name: jaeger-agent
+        ports:
+        - containerPort: 5775
+          protocol: UDP
+        - containerPort: 5778
+        - containerPort: 6831
+          protocol: UDP
+        - containerPort: 6832
+          protocol: UDP
+        command:
+        - "/go/bin/agent-linux"
+        - "--collector.host-port=jaeger-collector.default.svc:14267"        
 ---
 
 apiVersion: v1
