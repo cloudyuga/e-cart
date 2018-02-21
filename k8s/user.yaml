@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: user
-        image: teamcloudyuga/user-jaeger
+        image: teamcloudyuga/user-jaeger-with-time-delay
         ports:
         - containerPort: 5002
       - image: jaegertracing/jaeger-agent
