@@ -17,3 +17,5 @@ $ minikube service jaeger-query
 ```
 
 In JaegerUI, find traces of "catalogue-with-time-delay" and "user-with-time-delay"
+
+A time delay of 5 seconds is introduced in /catalogue and /register
