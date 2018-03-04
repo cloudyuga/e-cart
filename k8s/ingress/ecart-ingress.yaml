@@ -4,7 +4,7 @@ metadata:
   name: ecart-ingress
 spec:
   rules:
-  - host: app.cloudyuga.io
+  - host: ecart.cloudyuga.io
     http:
       paths:
       - backend:
