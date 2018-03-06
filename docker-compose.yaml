@@ -45,7 +45,7 @@ services:
    - ordersdb_data:/data/db
 
  orders:
-  image: teamcloudyuga/orders-for-payment-go
+  image: teamcloudyuga/orders
   ports:
    - "5004:5004"
 
