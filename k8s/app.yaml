@@ -20,6 +20,14 @@ spec:
           value: test
         ports:
         - containerPort: 5000
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "1m"
+          limits:
+            memory: "256Mi"
+            cpu: "100m"
+
 ---
 
 apiVersion: v1
@@ -32,6 +40,7 @@ spec:
   type: NodePort
   ports:
   - port: 80
+    nodePort: 31555
     targetPort: 5000
     protocol: TCP
   selector:
