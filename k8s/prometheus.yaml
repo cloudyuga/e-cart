@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: prometheus
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      volumes:
+        - name: voldb1
+          emptyDir: {}
+        - name: demo1
+          emptyDir: {}
+      initContainers:
+      - image: busybox
+        name: init-db1
+        volumeMounts:
+        - name: demo1
+          mountPath: /tmp/data
+        command: ["/bin/sh", "-c", "wget https://raw.githubusercontent.com/cloudyuga/e-cart/tenth-load-test/config/prometheus/prometheus.yml -O /tmp/data/prometheus.yml"] 
+      containers:
+      - name: prometheus
+        image: prom/prometheus
+        ports:
+        - containerPort: 9090
+        volumeMounts:
+        - name: voldb1
+          mountPath: /prometheus
+        - name: demo1
+          mountPath: /etc/prometheus/
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  labels:
+    app: prometheus
+spec:
+  type: NodePort
+  ports:
+  - port: 9090
+    nodePort: 31900
+    targetPort: 9090
+    protocol: TCP
+  selector:
+    app: prometheus
