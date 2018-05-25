@@ -1,10 +1,10 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: vhost-ingress
+  name: ecart-ingress
 spec:
   rules:
-  - host: cy.myweb.com
+  - host: ecart.cloudyuga.io
     http:
       paths:
       - backend:

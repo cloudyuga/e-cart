@@ -1,9 +1,14 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus
+  labels:
+    app: prometheus
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
   template:
     metadata:
       labels:
@@ -20,7 +25,7 @@ spec:
         volumeMounts:
         - name: demo1
           mountPath: /tmp/data
-        command: ["/bin/sh", "-c", "wget https://raw.githubusercontent.com/cloudyuga/e-cart/tenth-load-test/config/prometheus/prometheus.yml -O /tmp/data/prometheus.yml"] 
+        command: ["/bin/sh", "-c", "wget https://raw.githubusercontent.com/cloudyuga/e-cart/ninth-prometheus/config/prometheus/prometheus.yml -O /tmp/data/prometheus.yml"] 
       containers:
       - name: prometheus
         image: prom/prometheus

@@ -1,10 +1,15 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cart
+  labels:
+    app: cart
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: cart
   template:
     metadata:
       labels:
@@ -12,7 +17,7 @@ spec:
     spec:
       containers:
       - name: cart
-        image: teamcloudyuga/cart
+        image: teamcloudyuga/cart-prometheus
         ports:
         - containerPort: 5003
 ---
@@ -31,12 +36,17 @@ spec:
   selector:
     app: cart
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cartdb
+  labels:
+    app: cart
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: cartdb
   template:
     metadata:
       labels:
