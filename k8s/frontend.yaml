@@ -1,10 +1,15 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  labels:
+    app: frontend
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
   template:
     metadata:
       labels:
@@ -27,6 +32,7 @@ spec:
   type: NodePort
   ports:
   - port: 5000
+    nodePort: 31500
     targetPort: 5000
     protocol: TCP
   selector:
