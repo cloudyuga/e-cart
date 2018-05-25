@@ -1,9 +1,14 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ecart-db
+  labels:
+    app: ecartdb
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      appdb: ecartdb
   template:
     metadata:
       labels:
@@ -21,7 +26,7 @@ spec:
         - name: demo
           mountPath: /tmp/data
         command: ["/bin/sh", "-c", "wget https://raw.githubusercontent.com/cloudyuga/e-cart/monolith/sqldump/data/db.sql -O /tmp/data/db.sql"]
-   
+
       containers:
       - name: ecart-db
         image: mariadb
