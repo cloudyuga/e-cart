@@ -1,10 +1,15 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: payment
+  labels:
+    app: payment
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: payment
   template:
     metadata:
       labels:
@@ -12,9 +17,12 @@ spec:
     spec:
       containers:
       - name: payment
-        image: teamcloudyuga/payment
+        image: teamcloudyuga/payment-go-opentracing
         ports:
         - containerPort: 5005
+          name: p-port
+        - containerPort: 8700
+          name: o-port
 ---
 
 apiVersion: v1
@@ -25,18 +33,28 @@ metadata:
     app: payment
 spec:
   ports:
-  - port: 5005
+  - name: p-port
+    port: 5005
     targetPort: 5005
+    protocol: TCP
+  - name: o-port
+    port: 8700
+    targetPort: 8700
     protocol: TCP
   selector:
     app: payment
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: paymentdb
+  labels:
+    app: paymentdb
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: paymentdb
   template:
     metadata:
       labels:
