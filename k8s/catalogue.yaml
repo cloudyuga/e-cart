@@ -3,8 +3,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: catalogue
+  labels:
+    app: catalogue
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: catalogue
   template:
     metadata:
       labels:

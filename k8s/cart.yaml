@@ -3,8 +3,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cart
+  labels:
+    app: cart
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: cart       
   template:
     metadata:
       labels:
@@ -35,8 +40,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cartdb
+  labels:
+    app: cartdb
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: cartdb
   template:
     metadata:
       labels:

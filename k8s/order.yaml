@@ -3,8 +3,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: orders
+  labels:
+    app: orders
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: orders
   template:
     metadata:
       labels:
@@ -35,8 +40,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ordersdb
+  labels:
+    app: ordersdb
 spec:
   replicas: 1
+  selector:
+    matchLabels:      
+      app: ordersdb
   template:
     metadata:
       labels:
