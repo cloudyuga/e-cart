@@ -1,10 +1,15 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: orders
+  labels:
+    app: orders  
 spec:
   replicas: 1
+  selector:
+    matchlabels:
+      app: orders
   template:
     metadata:
       labels:
@@ -31,12 +36,17 @@ spec:
   selector:
     app: orders
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ordersdb
+  labels:
+    app: ordersdb
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ordersdb
   template:
     metadata:
       labels:
