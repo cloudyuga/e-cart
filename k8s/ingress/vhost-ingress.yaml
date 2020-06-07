@@ -4,7 +4,7 @@ metadata:
   name: vhost-ingress
 spec:
   rules:
-  - host: cy.myweb.com
+  - host: ecart.myweb.com
     http:
       paths:
       - backend:
