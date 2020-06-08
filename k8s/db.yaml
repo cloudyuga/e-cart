@@ -1,9 +1,14 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ecartdb
+  labels:
+    appdb: ecartdb
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      appdb: ecartdb
   template:
     metadata:
       labels:
