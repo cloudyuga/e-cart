@@ -1,10 +1,15 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: payment
+  labels:
+    app: payment
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: payment
   template:
     metadata:
       labels:
@@ -31,12 +36,17 @@ spec:
   selector:
     app: payment
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: paymentdb
+  labels:
+    app: paymentdb   
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: paymentdb
   template:
     metadata:
       labels:
